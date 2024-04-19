@@ -1,0 +1,15 @@
+.slick-dots li button:before {
+    color: white !important;
+}
+
+.slick-dots li button::after {
+    color: white !important;
+}
+
+.slick-dots li.slick-active button:before {
+    color: rgb(255, 255, 255) !important;
+}
+
+.slick-dots li.slick-active button::after {
+    color: rgb(255, 255, 255) !important;
+}
