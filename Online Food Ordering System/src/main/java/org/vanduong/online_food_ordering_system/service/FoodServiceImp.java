@@ -9,15 +9,15 @@ import org.vanduong.online_food_ordering_system.repository.FoodRepository;
 import org.vanduong.online_food_ordering_system.repository.RestaurantRepository;
 import org.vanduong.online_food_ordering_system.request.CreateFoodRequest;
 
+import java.io.Console;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class FoodServiceImp implements FoodService {
-
-
 
 
     @Autowired
@@ -41,8 +41,7 @@ public class FoodServiceImp implements FoodService {
         food.setCreatedDate(new Date());
 
 
-
-        Food savedFood= foodRepository.save(food);
+        Food savedFood = foodRepository.save(food);
         restaurant.getFoods().add(savedFood);
 
         System.out.println(createFoodRequest);
@@ -52,7 +51,7 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public Food updateFood(Long foodId, CreateFoodRequest updatedFoodRequest) throws Exception {
-        Optional<Food> food=foodRepository.findById(foodId);
+        Optional<Food> food = foodRepository.findById(foodId);
         food.get().setName(updatedFoodRequest.getName());
         food.get().setDescription(updatedFoodRequest.getDescription());
         food.get().setPrice(updatedFoodRequest.getPrice());
@@ -61,7 +60,7 @@ public class FoodServiceImp implements FoodService {
         food.get().setImgs(updatedFoodRequest.getImgs());
         food.get().setIngredients(updatedFoodRequest.getIngredients());
         food.get().setFoodCategory(updatedFoodRequest.getCategory());
-        food.get().setRestaurant(restaurantRepository.findById(updatedFoodRequest.getRestaurantId()).orElseThrow(()->new Exception("Restaurant not found")));
+        food.get().setRestaurant(restaurantRepository.findById(updatedFoodRequest.getRestaurantId()).orElseThrow(() -> new Exception("Restaurant not found")));
 
 
         return foodRepository.save(food.get());
@@ -69,9 +68,9 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public void deleteFood(Long foodId) throws Exception {
-        Food food= foodRepository.findById(foodId).orElseThrow(()->new Exception("Food not found"));
+        Food food = foodRepository.findById(foodId).orElseThrow(() -> new Exception("Food not found"));
         food.setRestaurant(null);
-        foodRepository.save(food);
+        foodRepository.delete(food);
 
     }
 
@@ -80,22 +79,37 @@ public class FoodServiceImp implements FoodService {
         List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
 
 
-        if(isVegan){
+
+        if(isVegan==true){
+            if(isSeasonal==true)
+            {
+                return foods;
+            }
             foods.removeIf(food -> !food.isVeg());
         }
-        if (isSeasonal){
-            foods.removeIf(food -> !food.isSeasonal());
+        if(isVegan==false){
+            if (isSeasonal) {
+                foods.removeIf(food -> !food.isSeasonal());
+            }
+            else {
+                foods.removeIf(food -> food.isVeg());
+            }
+
         }
 
-        if(categoryId!=null){
-            foods.removeIf(food -> food.getFoodCategory().getId()!=categoryId);
+
+
+        if (categoryId != null) {
+            foods.removeIf(food -> {
+                if (food.getFoodCategory() != null) {
+                    return !Objects.equals(food.getFoodCategory().getId(), categoryId);
+                }
+                return false;
+            });
         }
 
         return foods;
     }
-
-
-
 
 
     @Override
@@ -105,20 +119,17 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public Food findFoodById(Long foodId) throws Exception {
-    Optional<Food> food = foodRepository.findById(foodId);
-    if(food.isEmpty()){
-        throw  new Exception("Food not found");
+        Optional<Food> food = foodRepository.findById(foodId);
+        if (food.isEmpty()) {
+            throw new Exception("Food not found");
+        }
+        return food.get();
     }
-    return food.get();
-    }
-
-
-
 
 
     @Override
     public Food updateAvailabilityStatus(Long foodId) throws Exception {
-        Food food=new Food();
+        Food food = new Food();
         food.setAvailable(!food.isAvailable());
         return foodRepository.save(food);
     }
@@ -129,17 +140,17 @@ public class FoodServiceImp implements FoodService {
     }
 
     @Override
-    public List<Food> filterBySeasonal(List<Food> foods,boolean isSeasonal) {
+    public List<Food> filterBySeasonal(List<Food> foods, boolean isSeasonal) {
         return foods.stream().filter(food -> food.isSeasonal()).collect(Collectors.toList());
     }
 
     @Override
-    public List<Food> filterByCategory(List<Food> foods,Long categoryId) {
+    public List<Food> filterByCategory(List<Food> foods, Long categoryId) {
         return foods.stream().filter(food -> {
-            if(food.getFoodCategory()!=null){
-                    return food.getFoodCategory().getName().equals(categoryId);
-        }
-        return false;
+            if (food.getFoodCategory() != null) {
+                return food.getFoodCategory().getName().equals(categoryId);
+            }
+            return false;
         }).collect(Collectors.toList());
     }
 }

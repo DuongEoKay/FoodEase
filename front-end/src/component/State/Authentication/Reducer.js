@@ -6,7 +6,7 @@ const initialState = {
     isLoading: false,
     error: null,
     jwt: null,
-    favorite: [],
+    favorites: [],
     success: null
 }
 
@@ -22,6 +22,7 @@ export const authReducer = (state = initialState, action) => {
                 isLoading: true,
                 error: null,
                 success: null
+                
             }
 
         case LOGIN_SUCCESS:
@@ -30,28 +31,30 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 error: null,
-                jwt: action.payload,
+                jwt: action.payload.jwt,
                 success: "regiter success"
             }
 
-            case GET_USER_SUCCESS:
+        case GET_USER_SUCCESS:
             return {
                 ...state,
                 isLoading: false,
                 user: action.payload,
+                favorites: action.payload.favorites,
             }
 
         case ADD_TO_FAVORITE_SUCCESS:
+            const favorites = Array.isArray(state.favorites) ? state.favorites : [];
+            console.log(favorites)
             return {
                 ...state,
                 isLoading: false,
                 error: null,
                 success: "add to favorite success",
-                favorite: isPresentInFavourite(state.favorite, action.payload)
-                    ? state.favorite.filter((item) => item.id === action.payload.id)
-                    : [...state.favorite, action.payload]
-            }
-
+                favorites: isPresentInFavourite(favorites, action.payload)
+                    ? favorites.filter((item) => item.id === action.payload.id)
+                    : [...state.favorites, action.payload],
+            };
 
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:
@@ -67,10 +70,11 @@ export const authReducer = (state = initialState, action) => {
 
         case LOGOUT:
             return initialState;
-            
+
 
 
         default:
             return state;
     };
 }
+

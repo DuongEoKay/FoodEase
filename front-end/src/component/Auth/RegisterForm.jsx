@@ -88,7 +88,7 @@ export const RegisterForm = () => {
       </Formik>
       <Typography variant='body2' allign='center' sx={{ mt: 3 }}>
         If you have an account already?
-        <Button size='small' onClick={() => navigate('/account/login')} color='primary'>Register</Button>
+        <Button size='small' onClick={() => navigate('/account/login')} color='primary'>Login</Button>
       </Typography>
     </div>
   )

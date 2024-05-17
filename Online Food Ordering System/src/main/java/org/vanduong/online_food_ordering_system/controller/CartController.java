@@ -27,7 +27,7 @@ public class CartController {
 
 
 
-    @PutMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest request, @RequestHeader("Authorization") String jwt) throws Exception {
         CartItem cartItem = cartService.addItemToCart(request, jwt);
         return ResponseEntity.ok(cartItem);
@@ -42,7 +42,7 @@ public class CartController {
     }
 
     @DeleteMapping("/{id}/remove")
-    public ResponseEntity<Long> removeCartItem(@RequestParam Long id, @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<Long> removeCartItem( @PathVariable Long id, @RequestHeader("Authorization") String jwt) throws Exception {
         Long cartId = cartService.removeCartItem(id, jwt).getId();
         return ResponseEntity.ok(cartId);
     }
@@ -58,7 +58,12 @@ public class CartController {
 
 
 
-
+    @GetMapping("/cart")
+    public ResponseEntity<Cart> findCartByUserId(@RequestHeader("Authorization") String jwt) throws Exception {
+        User user = userService.findUserByJwt(jwt);
+        Cart cart = cartService.findCartByUserId(user.getId());
+        return ResponseEntity.ok(cart);
+    }
 
 
 

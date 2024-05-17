@@ -115,6 +115,8 @@ public class RestaurantServiceImp implements RestaurantService{
 
     @Override
     public RestaurantDto addToFavorite(Long restaurantId, User user) throws Exception {
+
+
         Restaurant restaurant=findRestaurantById(restaurantId);
         RestaurantDto restaurantDto=new RestaurantDto();
         restaurantDto.setDescription(restaurant.getDescription());
@@ -140,8 +142,10 @@ public class RestaurantServiceImp implements RestaurantService{
         else {
             favorites.removeIf(r -> Objects.equals(r.getId(), restaurantId));
         }
+        System.out.println(favorites);
 
         userRepository.save(user);
+        System.out.println(user.getFavourites());
         return restaurantDto;
     }
 

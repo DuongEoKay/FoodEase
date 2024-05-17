@@ -8,9 +8,12 @@ import './Navbar.css'
 import { Person } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Auth } from '../Auth/Auth';
-import { useSelector } from 'react-redux';
+import {   useSelector } from 'react-redux';
+
+
 export const Navbar = () => {
-    const {auth}=useSelector(state=>state)
+    const {auth,cart}=useSelector(state=>state)
+
     const navigate=useNavigate()
     const handleAvatarClick=()=>{
         if(auth.user.role==='ROLE_CUSTOMER'){
@@ -39,7 +42,7 @@ export const Navbar = () => {
                 <div className='flex items-center space-x-2 lg:space-x-10'>
                     <div className=''>
                         <IconButton>
-                            <SearchIcon sx={{ fontSize: "1.5rem" }} />
+                            <SearchIcon sx={{ fontSize: "1.5rem" }} />  
                         </IconButton>
                     </div>
 
@@ -59,8 +62,8 @@ export const Navbar = () => {
 
                     <div className=''>
 
-                        <IconButton >
-                            <Badge color='primary' badgeContent={3}>
+                        <IconButton onClick={()=>navigate("/cart")}>
+                            <Badge color='primary' badgeContent={cart.cart?.cartItems.length}>
                                 <ShoppingCartIcon sx={{ fontSize: "1.5rem" }} />
 
                             </Badge>

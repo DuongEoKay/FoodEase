@@ -44,7 +44,7 @@ public class AdminFoodController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponse> deleteFood(@RequestHeader("Authorization") String jwt,
-                                           @RequestParam Long id) throws Exception {
+                                           @PathVariable Long id) throws Exception {
 
         User user= userService.findUserByJwt(jwt);
 

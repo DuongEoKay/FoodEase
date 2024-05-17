@@ -7,6 +7,7 @@ import { CustomerRoute } from './Routers/CustomerRoute';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './component/State/Authentication/Action';
+import { findCart } from './component/State/Cart/Action';
 
 
 function App() {
@@ -15,7 +16,12 @@ function App() {
   const {auth}=useSelector(state=>state)
   useEffect(() => {
       dispatch(getUser(jwt || auth.jwt))
+      dispatch(findCart(jwt))
   }, [auth.jwt]);
+
+
+
+
   return (
     <ThemeProvider theme={DarkTheme}>
         <CssBaseline />

@@ -52,7 +52,7 @@ public class IngredientController {
 
 
     @GetMapping("/restaurant/{restaurantId}")
-    public ResponseEntity<List<IngredientsItem>> getRestaurantIngredients(@RequestParam Long restaurantId,
+    public ResponseEntity<List<IngredientsItem>> getRestaurantIngredients(@PathVariable Long restaurantId,
                                                                 @RequestHeader("Authorization") String jwt) throws Exception {
         List<IngredientsItem> ingredientsItem = ingredientService.findRestaurantIngredients(restaurantId);
         return ResponseEntity.ok(ingredientsItem);
@@ -61,7 +61,7 @@ public class IngredientController {
 
 
     @GetMapping("/restaurant/{restaurantId}/category")
-    public ResponseEntity<List<IngredientsCategory>> getRestaurantIngredientCategory(@RequestParam Long restaurantId,
+    public ResponseEntity<List<IngredientsCategory>> getRestaurantIngredientCategory(@PathVariable Long restaurantId,
                                                                        @RequestHeader("Authorization") String jwt) throws Exception {
         List<IngredientsCategory> ingredientsCategories = ingredientService.findIngredientsCategoryByRestaurantId(restaurantId);
         return ResponseEntity.ok(ingredientsCategories);

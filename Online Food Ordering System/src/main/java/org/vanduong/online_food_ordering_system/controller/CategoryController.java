@@ -34,7 +34,7 @@ public class CategoryController {
 
         User user = userService.findUserByJwt(jwt);
         
-        Category newCategory = categoryService.createCategory(category.getName(), category.getRestaurant().getId());
+        Category newCategory = categoryService.createCategory(category.getName(), user.getId());
 
         MessageResponse messageResponse = new MessageResponse();
         messageResponse.setMessage("Category created successfully");
@@ -46,12 +46,12 @@ public class CategoryController {
 
     @GetMapping("/category/{restaurantId}")
     public ResponseEntity<List<Category>> findCategoryByRestaurantId(
-                                                          @RequestHeader("Authorization") String jwt) throws Exception {
+                                                          @RequestHeader("Authorization") String jwt, @PathVariable Long restaurantId) throws Exception {
 
         User user = userService.findUserByJwt(jwt);
 
 
-        List<Category> newCategory = categoryService.findCategoriesByRestaurantId(user.getId());
+        List<Category> newCategory = categoryService.findCategoriesByRestaurantId(restaurantId);
 
 
 

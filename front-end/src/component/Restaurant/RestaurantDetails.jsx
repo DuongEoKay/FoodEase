@@ -1,13 +1,17 @@
-import { Divider, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import { Divider, FormControl, FormControlLabel, Grid, Radio, RadioGroup, Typography, getMenuItemUtilityClass } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import MenuCard from './MenuCard';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRestaurantById, getRestaurantsCategory } from '../State/Restaurant/Action';
+import { getMenuItemsByRestaurantId } from '../State/Menu/Action';
+import { FastField } from 'formik';
 
 
 
 
-const categories = ["Pho", "Bun", "Com", "Mi"];
 
 
 const foodType = [{ label: "All", value: "all" },
@@ -16,22 +20,53 @@ const foodType = [{ label: "All", value: "all" },
 { label: "Seasonal", value: "seasonal" },];
 
 
-const Menu = [1,1,1,1,,1,1,]
+
 
 export const RestaurantDetails = () => {
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { auth } = useSelector(state => state)
+    const { restaurant } = useSelector(state => state)
+    const { menu } = useSelector(state => state)
+    const jwt = localStorage.getItem('jwt')
+    auth.favorites = auth?.auth?.user?.favourites || [];
+    const [selectedCategory, setSelectedCategory] = useState('')
     const [selectedFoodType, setSelectedFoodType] = useState('all')
-    const [selectedCategory, setSelectedCategory] = useState('all')
-
-    const handleFilterFoodType = (e) => {
-        setSelectedFoodType(e.target.value, e.target.label);
-
+    const handleFilterFoodType = (e, value) => {
+        setSelectedFoodType(value);
     }
 
-    const handleFilterCategory = (e) => {
+    const handleFilterCategory = (e, value) => {
 
-        setSelectedCategory(e.target.value);
+        for (let i = 0; i < restaurant.categories.length; i++) {
+            if (restaurant.categories[i].name === value) {
+                setSelectedCategory(restaurant.categories[i].id)
+            }
+        }
     }
+
+    const { id, city } = useParams();
+
+    useEffect(() => {
+        dispatch(getRestaurantById({ jwt, restaurantId: id }))
+        dispatch(getRestaurantsCategory({ jwt, restaurantId: id }))
+    }, [])
+
+
+    useEffect(() => {
+        dispatch(getMenuItemsByRestaurantId({
+            jwt,
+            restaurantId: id,
+            seasonal: selectedFoodType === 'seasonal' || selectedFoodType === 'all',
+            vegetarian: selectedFoodType === 'vegetarian' || selectedFoodType === 'all',
+            foodCategory: selectedCategory
+        }))
+
+    }, [selectedCategory, selectedFoodType])
+
+
+
 
 
 
@@ -45,10 +80,10 @@ export const RestaurantDetails = () => {
                 <div>
                     <Grid container spacing={12}>
                         <Grid item xs={12} lg={4}>
-                            <img className='w-full h-[40vh] object-cover' src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/74/1a/08/restaurant-ambiance.jpg?w=1000&h=-1&s=1" alt="" />
+                            <img className='w-full h-[40vh] object-cover' src={restaurant.restaurants?.imgs?.[1]} alt="" />
                         </Grid>
                         <Grid item xs={12} lg={4}>
-                            <img className='w-full h-[40vh] object-cover' src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Restaurant_N%C3%A4sinneula.jpg/640px-Restaurant_N%C3%A4sinneula.jpg" alt="" />
+                            <img className='w-full h-[40vh] object-cover' src={restaurant.restaurants?.imgs?.[2]} alt="" />
                         </Grid>
                         <Grid item xs={12} lg={4}>
                             <img className='w-full h-[40vh] object-cover' src="https://windypoint.com.au/wp-content/uploads/2020/01/DSC00593.jpg" alt="" />
@@ -58,14 +93,11 @@ export const RestaurantDetails = () => {
                 </div>
 
                 <div className='pt-3 pb-5'>
-                    <h1 className='text-4x1 font-semibold' >Vietnammese Food</h1>
-                    <p className='text-gray-500 mt-1'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At,
-                        officia quaerat sed excepturi, animi vel quasi nisi inventor
-                        e commodi sequi quod aspernatur tempora eaque quo quis id dolo
-                        rum unde doloribus.</p>
+                    <h1 className='text-4x1 font-semibold' >{restaurant.restaurants?.name}</h1>
+                    <p className='text-gray-500 mt-1'>{restaurant.restaurants?.description}</p>
                     <p className='text-gray-500 flex items-center gap-3'>
                         <LocationOnIcon />
-                        <span>Saigon</span>
+                        <span>{restaurant.restaurants?.address?.street}, {restaurant.restaurants?.address?.city}</span>
                     </p>
 
                     <p className='text-gray-500 flex items-center gap-3'>
@@ -99,9 +131,9 @@ export const RestaurantDetails = () => {
                             </Typography>
 
                             <FormControl className='py-10 space-y-5' component={"fieldset"}>
-                                <RadioGroup onChange={handleFilterCategory} name="food_type" value={selectedCategory}>
-                                    {categories.map((item) =>
-                                        <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
+                                <RadioGroup onChange={handleFilterCategory} name="food_category" value={restaurant.categories.find(cat => cat.id === selectedCategory)?.name || ''}>
+                                    {restaurant.categories.map((item) =>
+                                        <FormControlLabel key={item.id} value={item.name} control={<Radio />} label={item.name} />
                                     )}
                                 </RadioGroup>
                             </FormControl>
@@ -110,7 +142,7 @@ export const RestaurantDetails = () => {
                 </div>
 
                 <div className='space-y-5 lg:w-[80%] lg:pl-10'>
-                    {Menu.map((item) => <MenuCard />)}
+                    {menu.menuItem.map((item, index) => <MenuCard key={item.id} item={item} />)}
 
                 </div>
 

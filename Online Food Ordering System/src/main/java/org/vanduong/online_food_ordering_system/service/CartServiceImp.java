@@ -91,6 +91,7 @@ public class CartServiceImp implements CartService{
         }
         CartItem item= cartItem.get();
         cart.getCartItems().remove(item);
+        //cartItemRepository.delete(item);
         return cartRepository.save(cart);
     }
 

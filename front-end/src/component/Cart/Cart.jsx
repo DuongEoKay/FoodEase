@@ -6,6 +6,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useSelector } from 'react-redux';
 //import * as Yup from 'yup';
 
 
@@ -43,12 +44,25 @@ const initialValues={
 // })
 
 const Cart = () => {
-    const createOrderUsingSelectedAddress = () => { }
 
+    const createOrderUsingSelectedAddress = () => { }
+    
     const handleOpenAddressModal = () => setOpen(true);
     const [open, setOpen] = React.useState(false);
+    
+    const {cart} = useSelector(state => state)
+    // const data={
+    //     jwt:localStorage.getItem('jwt'),
+    //     order:{
+    //         restaurantId:cart.cartItems[0].food?.restaurant.id,
+    //         deliveryAddress:{
+    //             street: values.streetAddress,
+    //             city: values.city,
+    //             postalCode: values.pincode
+    //         }
 
-
+    //     }
+    // }
 
 
     const handleClose = () => {
@@ -64,32 +78,32 @@ const Cart = () => {
         <>
             <main className='lg:flex justify-between'>
                 <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
-                    {items.map((item) => <CartItem />)}
+                    {cart.cart?.cartItems.map((item) => (<CartItem item={item}/>))}
                     <Divider />
 
                     <div className='billlDetails px-5 text-sm'>
                         <p className='font-extralight py-5'>Bill Details</p>
                         <div className='flex justify-between text-gray-400'>
                             <p>Item Total</p>
-                            <p>999.999 VND</p>
+                            <p>{cart.cart?.total} VND</p>
 
                         </div>
 
                         <div className='flex justify-between text-gray-400 '>
                             <p>Deliver Fee</p>
-                            <p>999.999 VND</p>
+                            <p>10000 VND</p>
 
                         </div>
 
                         <div className='flex justify-between text-gray-400'>
                             <p>GST and Restaurant Charges</p>
-                            <p>999.999 VND</p>
+                            <p>20000 VND</p>
 
                         </div>
                         <Divider />
                         <div className='flex justify-between text-gray-400'>
                             <p>Total Pay</p>
-                            <p>999.999.999 VND</p>
+                            <p>{cart.cart?.total+10000+20000} VND</p>
                         </div>
                     </div>
 

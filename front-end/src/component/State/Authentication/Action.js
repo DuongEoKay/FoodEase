@@ -75,11 +75,11 @@ export const getUser = (jwt) => async (dispatch) => {
 }
 
 
-export const getToFavorite = (jwt, restaurantId) => async (dispatch) => {
+export const addToFavorite = ({jwt, restaurantId}) => async (dispatch) => {
     dispatch({ type: ADD_TO_FAVORITE_REQUEST })
 
     try {
-        const {data:res} = await api.post(`/restaurants/${restaurantId}/add-favourite`,{},
+        const {data:res} = await api.put(`/restaurants/${restaurantId}/add-favourite`,{},
 
             { headers: {
                 Authorization: `Bearer ${jwt}` 
