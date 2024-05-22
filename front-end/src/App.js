@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './component/State/Authentication/Action';
 import { findCart } from './component/State/Cart/Action';
+import Routers from './Routers/Routers';
 
 
 function App() {
@@ -25,8 +26,7 @@ function App() {
   return (
     <ThemeProvider theme={DarkTheme}>
         <CssBaseline />
-
-        <CustomerRoute/>
+        <Routers/>
     </ThemeProvider>
 
 

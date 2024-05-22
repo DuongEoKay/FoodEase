@@ -20,11 +20,16 @@ export const Navbar = () => {
             navigate('/profile')
         }
         if(auth.user.role==='ROLE_RESTAURANT_OWNER'){
-            navigate('/admin/restaurant')
+            navigate('/admin/restaurant/dashboard')
         }
     }
     const handleLogoClick=()=>{
         navigate('/')
+    }
+
+    let numItems = 0;
+    for (let i = 0; i < cart.cart?.cartItems.length; i++) {
+        numItems += cart.cart?.cartItems[i].quantity;
     }
     return (
 
@@ -63,7 +68,7 @@ export const Navbar = () => {
                     <div className=''>
 
                         <IconButton onClick={()=>navigate("/cart")}>
-                            <Badge color='primary' badgeContent={cart.cart?.cartItems.length}>
+                            <Badge color='primary' badgeContent={numItems}>
                                 <ShoppingCartIcon sx={{ fontSize: "1.5rem" }} />
 
                             </Badge>

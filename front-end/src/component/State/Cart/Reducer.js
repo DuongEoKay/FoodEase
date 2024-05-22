@@ -55,8 +55,7 @@ const cartReducer = (state=initialState, action) => {
                 )
             };
         case actionTypes.UPDATE_CARTITEM_SUCCESS:
-            console.log("state",state);
-            console.log("state.cartItems",state.cart.cartItems);
+            console.log("action.payload",action.payload);
             return {
                 ...state,
                 loading: false,

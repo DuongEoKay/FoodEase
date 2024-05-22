@@ -6,7 +6,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createOrder } from '../State/Order/Action';
 //import * as Yup from 'yup';
 
 
@@ -26,8 +27,7 @@ export const style = {
 
 const initialValues={
     streetAddress:'',
-    state:'',
-    pincode:'',
+    postalCode:'',
     city:''
 }
 
@@ -45,24 +45,15 @@ const initialValues={
 
 const Cart = () => {
 
+    const dispatch = useDispatch()
+
     const createOrderUsingSelectedAddress = () => { }
     
     const handleOpenAddressModal = () => setOpen(true);
     const [open, setOpen] = React.useState(false);
     
-    const {cart} = useSelector(state => state)
-    // const data={
-    //     jwt:localStorage.getItem('jwt'),
-    //     order:{
-    //         restaurantId:cart.cartItems[0].food?.restaurant.id,
-    //         deliveryAddress:{
-    //             street: values.streetAddress,
-    //             city: values.city,
-    //             postalCode: values.pincode
-    //         }
-
-    //     }
-    // }
+    const {cart, auth} = useSelector(state => state)
+    
 
 
     const handleClose = () => {
@@ -71,7 +62,20 @@ const Cart = () => {
 
 
     const handleSubmit = (values) => {
-        console.log("form value",values)
+        
+        const data={
+            jwt:localStorage.getItem('jwt'),
+            order:{
+                restaurantId:cart.cart.cartItems[0].food?.restaurant.id,
+                deliveryAddress:{
+                    street: values.streetAddress,
+                    city: values.city,
+                    postalCode: values.pincode
+                }
+    
+            }
+        }
+        dispatch(createOrder(data))
     }
     return (
 
@@ -100,8 +104,8 @@ const Cart = () => {
                             <p>20000 VND</p>
 
                         </div>
-                        <Divider />
-                        <div className='flex justify-between text-gray-400'>
+                        <Divider className='py-5'/>
+                        <div className='flex justify-between py-5 text-gray-400'>
                             <p>Total Pay</p>
                             <p>{cart.cart?.total+10000+20000} VND</p>
                         </div>

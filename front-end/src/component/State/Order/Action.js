@@ -1,5 +1,5 @@
 import { LOGOUT } from "../Authentication/ActionType";
-
+import { api } from "../../config/api";
 import {
     CREATE_ORDER_FAILURE,
     CREATE_ORDER_REQUEST,
@@ -27,10 +27,10 @@ export const createOrder=(reqData)=>{
                     Authorization: `Bearer ${reqData.jwt}`
                 }
             });
-            // if(data.payment_url)
-            // {
-            //     window.location.href=data.payment_url;
-            // }
+            if(data.payment_url)
+            {
+                window.location.href=data.payment_url;
+            }
             console.log("create order",data);
             dispatch({type: CREATE_ORDER_SUCCESS, payload:data});
         }catch(error){

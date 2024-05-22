@@ -8,7 +8,9 @@ import org.vanduong.online_food_ordering_system.model.CartItem;
 import org.vanduong.online_food_ordering_system.model.Order;
 import org.vanduong.online_food_ordering_system.model.User;
 import org.vanduong.online_food_ordering_system.request.OrderRequest;
+import org.vanduong.online_food_ordering_system.response.PaymentResponse;
 import org.vanduong.online_food_ordering_system.service.OrderService;
+import org.vanduong.online_food_ordering_system.service.PaymentService;
 import org.vanduong.online_food_ordering_system.service.UserService;
 
 import java.util.List;
@@ -25,14 +27,16 @@ public class OrderController {
     @Autowired
     private UserService userService;
 
-
+    @Autowired
+    private PaymentService paymentService;
 
     @PostMapping("/")
-    public ResponseEntity<Order> createOrder(@RequestBody OrderRequest request,
-                                                @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<PaymentResponse> createOrder(@RequestBody OrderRequest request,
+                                                       @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwt(jwt);
         Order order = orderService.createOrder(request, user);
-        return new ResponseEntity<>(order, HttpStatus.CREATED);
+        PaymentResponse res =paymentService.createPaymentLink(order);
+        return new ResponseEntity<>(res, HttpStatus.CREATED);
 
     }
 

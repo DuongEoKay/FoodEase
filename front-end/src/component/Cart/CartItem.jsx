@@ -1,5 +1,5 @@
 import { Chip, IconButton } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -15,6 +15,7 @@ export const CartItem = ({item}) => {
     const dispatch=useDispatch()
     const jwt=localStorage.getItem('jwt')
 
+
     const handleUpdateCartItem=(value)=>{
         if(value===-1 && item.quantity===1){
         dispatch(removeCartItem(item.id,jwt))
@@ -23,6 +24,7 @@ export const CartItem = ({item}) => {
         dispatch(updateCartItem(data,jwt))
 
     }
+
     
     return (
         <div className='px-5'>
@@ -33,7 +35,7 @@ export const CartItem = ({item}) => {
 
                 <div className='flex items-center justify-between lg:w-[70%]'>
                     <div className='space-y-1 lg:space-y-3 w-full'>
-                        <p>Pho</p>
+                        <p>{item.food.name}</p>
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center space-x-1'>
                                 <IconButton onClick={()=>{handleUpdateCartItem(-1)}}>
