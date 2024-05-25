@@ -23,19 +23,20 @@ import {
 
 
 
-export const createMenuItem = (menu, jwt) => {
+export const createMenuItem = ({values, jwt}) => {
+    console.log("create menu item",values);
+    console.log("jwt",jwt);
     return async (dispatch) => {
         dispatch({type: CREATE_MENU_ITEM_REQUEST});
         try {
-            const {data} = await api.post('/admin/food',{
-                menu
-            },{
+            const response = await api.post('/admin/food/',values,
+            {
                 headers: {
                     Authorization: `Bearer ${jwt}`
                 }
             });
-            dispatch({type: CREATE_MENU_ITEM_SUCCESS, payload: data});
-            console.log("create menu item",data);
+            dispatch({type: CREATE_MENU_ITEM_SUCCESS, payload: response.data});
+            console.log("create menu item",response.data);
         } catch (error) {
             console.log("catch error",error);
             dispatch({type: CREATE_MENU_ITEM_FAILURE, payload: error});
@@ -47,9 +48,7 @@ export const getMenuItemsByRestaurantId = (reqData) => {
     return async (dispatch) => {
         dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_REQUEST});
         try {
-            const {data} = await api.get(`/food/restaurant/${reqData.restaurantId}?isVegan=${reqData.
-                vegetarian}&isSeasonal=${reqData.seasonal}
-            &categoryId=${reqData.foodCategory}`,
+            const {data} = await api.get(`/food/restaurant/${reqData.restaurantId}?isVegan=${reqData.vegetarian}&isSeasonal=${reqData.seasonal}&categoryId=${reqData.foodCategory}&all=${reqData.all}`,
             {
                 headers: {
                     Authorization: `Bearer ${reqData.jwt}`

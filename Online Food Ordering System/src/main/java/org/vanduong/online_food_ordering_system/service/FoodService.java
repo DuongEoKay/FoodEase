@@ -7,7 +7,6 @@ import org.vanduong.online_food_ordering_system.model.Restaurant;
 import org.vanduong.online_food_ordering_system.request.CreateFoodRequest;
 
 import java.util.List;
-import java.util.Optional;
 
 
 public interface FoodService {
@@ -21,7 +20,7 @@ public interface FoodService {
     public List<Food>getRestaurantFoods(Long restaurantId,
                                         boolean isVegan,
                                         boolean isSeasonal,
-                                        Long categoryId) ;
+                                        Long categoryId, boolean all) ;
 
 
     public List<Food> searchFood(String keyword) ;

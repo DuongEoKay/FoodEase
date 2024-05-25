@@ -71,7 +71,7 @@ public class AdminRestaurantController {
 
 
     @GetMapping("/user")
-    public ResponseEntity<Restaurant>findRestaurantByUserId(@RequestBody CreateRestaurantRequest rq, @RequestHeader("Authorization") String jwt) throws Exception {
+    public ResponseEntity<Restaurant>findRestaurantByUserId( @RequestHeader("Authorization") String jwt) throws Exception {
 
         User user = userService.findUserByJwt(jwt);
 

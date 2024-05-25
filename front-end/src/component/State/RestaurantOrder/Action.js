@@ -9,13 +9,13 @@ import {
 
 } from './ActionType';
 
-import {api} from '../../../api/api';
+import { api } from '../../config/api';
 
 export const updateOrderStatus = ({orderId, orderStatus, jwt})=>{
     return async (dispatch)=>{
         dispatch({type: UPDATE_ORDER_STATUS_REQUEST});
         try{
-            const response = await axios.put(api.updateOrderStatus, {orderId, orderStatus}, {
+            const response = await api.put(api.updateOrderStatus, {orderId, orderStatus}, {
                 headers: {
                     'Authorization': `Bearer ${jwt}`
                 }
@@ -34,7 +34,7 @@ export const fetchRestaurantsOrder=({restaurantId, orderStatus, jwt})=>{
     return async (dispatch)=>{
         dispatch({type: GET_RESTAURANTS_ORDER_REQUEST});
         try{
-            const response = await axios.get(`api/admin/order/restaurant/${restaurantId}`,{
+            const response = await api.get(`admin/order/restaurant/${restaurantId}`,{
                 params: {order_status:orderStatus},
                 headers: {
                     'Authorization': `Bearer ${jwt}`

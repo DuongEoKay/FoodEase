@@ -47,6 +47,7 @@ public class FoodController {
                                                         @RequestParam(required = false) boolean isVegan,
                                                         @RequestParam(required = false) boolean isSeasonal,
                                                         @RequestParam (required = false)Long categoryId,
+                                                         @RequestParam (required = false)boolean all,
                                                          @RequestHeader("Authorization") String jwt) throws Exception {
 
 
@@ -55,7 +56,7 @@ public class FoodController {
 
         Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
 
-        List<Food> food = foodService.getRestaurantFoods(restaurantId,isVegan,isSeasonal,categoryId);
+        List<Food> food = foodService.getRestaurantFoods(restaurantId,isVegan,isSeasonal,categoryId, all);
 
         return ResponseEntity.ok(food);
     }

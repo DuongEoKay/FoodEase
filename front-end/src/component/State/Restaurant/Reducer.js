@@ -10,8 +10,28 @@ const initialState = {
     categories: [],
 };
 
+
 export const restaurantReducer = (state = initialState, action) => {
     switch (action.type) {
+        
+        case actionTypes.GET_RESTAURANT_BY_USER_ID_REQUEST:
+            return {
+                ...state,
+                loading: true
+            };
+        case actionTypes.GET_RESTAURANT_BY_USER_ID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                usersRestaurant: action.payload
+            };
+        case actionTypes.GET_RESTAURANT_BY_USER_ID_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            };
+            
         case actionTypes.CREATE_RESTAURANT_REQUEST:
             return {
                 ...state,

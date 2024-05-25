@@ -28,7 +28,6 @@ const cartReducer = (state=initialState, action) => {
             };
         case actionTypes.CREATE_CART_SUCCESS:
         case actionTypes.FIND_CART_SUCCESS:
-            console.log("action.payload",action.payload);
             return {
                 ...state,
                 loading: false,
@@ -55,7 +54,6 @@ const cartReducer = (state=initialState, action) => {
                 )
             };
         case actionTypes.UPDATE_CARTITEM_SUCCESS:
-            console.log("action.payload",action.payload);
             return {
                 ...state,
                 loading: false,

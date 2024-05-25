@@ -9,7 +9,6 @@ import org.vanduong.online_food_ordering_system.repository.FoodRepository;
 import org.vanduong.online_food_ordering_system.repository.RestaurantRepository;
 import org.vanduong.online_food_ordering_system.request.CreateFoodRequest;
 
-import java.io.Console;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -74,10 +73,42 @@ public class FoodServiceImp implements FoodService {
 
     }
 
-    @Override
-    public List<Food> getRestaurantFoods(Long restaurantId, boolean isVegan, boolean isSeasonal, Long categoryId) {
-        List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
 
+
+
+//        @Override
+//    public List<Food> getRestaurantFoods(Long restaurantId, boolean isVegan, boolean isSeasonal, Long categoryId) {
+//            List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
+//
+//if (Boolean.TRUE.equals(isVegan)) {
+//    foods.removeIf(food -> !food.isVeg());
+//}
+//
+//if (Boolean.TRUE.equals(isSeasonal)) {
+//    foods.removeIf(food -> !food.isSeasonal());
+//}
+//
+//            if (categoryId != null) {
+//                foods.removeIf(food -> {
+//                    if (food.getFoodCategory() != null) {
+//                        return !Objects.equals(food.getFoodCategory().getId(), categoryId);
+//                    }
+//                    return false;
+//                });
+//            }
+//
+//            return foods;
+//    }
+
+
+
+
+    @Override
+    public List<Food> getRestaurantFoods(Long restaurantId, boolean isVegan, boolean isSeasonal, Long categoryId, boolean all) {
+        List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
+        if(all==true){
+            return foods;
+        }
 
 
         if(isVegan==true){

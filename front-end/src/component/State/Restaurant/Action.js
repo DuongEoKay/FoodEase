@@ -37,19 +37,47 @@ import {
     UPDATE_RESTAURANT_STATUS_SUCCESS,
     UPDATE_RESTAURANT_FAILURE,
     UPDATE_RESTAURANT_REQUEST,
-    UPDATE_RESTAURANT_SUCCESS
+    UPDATE_RESTAURANT_SUCCESS,
+
+    GET_RESTAURANT_BY_USER_ID_FAILURE,
+    GET_RESTAURANT_BY_USER_ID_REQUEST,
+    GET_RESTAURANT_BY_USER_ID_SUCCESS
+
 } from './ActionType';
 
 
+export const getRestaurantByUserId = (jwt) => {
+    return async (dispatch) => {
+        dispatch({type: GET_RESTAURANT_BY_USER_ID_REQUEST});
+        try {
+            
+            const response = await api.get(`/admin/restaurant/user`,{
+                headers: {
+                    Authorization: `Bearer ${jwt}`
+                }
+            });
+            dispatch({type: GET_RESTAURANT_BY_USER_ID_SUCCESS, payload: response.data});
+            console.log("get restaurant by user id",response.data);
+        }
+        catch (error) {
+            console.log("get restaurant by user id failed",error);
+            dispatch({type: GET_RESTAURANT_BY_USER_ID_FAILURE, payload: error});
+        }
+    }
+}
+
 export const getAllRestaurantsAction = (token) => {
     return async (dispatch) => {
+        
         dispatch({type: GET_ALL_RESTAURANTS_REQUEST});
         try {
             const response = await api.get('/restaurants/',{
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
+                
             });
+            
             dispatch({type: GET_ALL_RESTAURANTS_SUCCESS, payload: response.data});
             //console.log("all restaurant",response.data);
         } catch (error) {
@@ -82,7 +110,7 @@ export const createRestaurant = (reqData) => {
     return async (dispatch) => {
         dispatch({type: CREATE_RESTAURANT_REQUEST});
         try {
-            const {response} = await api.post('/admin/restaurant/create', reqData,{
+            const {response} = await api.post('/admin/restaurant/create', reqData.data,{
                 headers: {
                     Authorization: `Bearer ${reqData.jwt}`
                 }
@@ -253,7 +281,7 @@ export const getRestaurantsCategory = ({jwt, restaurantId}) => {
                 }
             });
             dispatch({type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: data});
-            console.log("get restaurant category",data);
+            //console.log("get restaurant category",data);
         } catch (error) {
             console.log("catch error",error);
             dispatch({type: GET_RESTAURANTS_CATEGORY_FAILURE, payload: error});
