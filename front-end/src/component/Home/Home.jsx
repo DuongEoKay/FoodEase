@@ -9,7 +9,6 @@ import { findCart } from '../State/Cart/Action'
 
 
 
-const restaurants=[1,1,1,1,1,1,1,1,1,1]
 export const Home = () => {
 
   const dispatch = useDispatch()
@@ -56,8 +55,7 @@ export const Home = () => {
           <h1 className='text-2x1 font-semibold text-gray-400 py-3'>Top Restaurant</h1>
           <div className='flex flex-wrap items-center justify-around gap-5'>
             
-                {restaurant.restaurants.map((item)=><RestaurantCard item={item}/>)}
-            
+          {restaurant?.restaurants?.map ? restaurant.restaurants.map((item)=><RestaurantCard item={item}/>) : null}            
           </div>
         </section>
 

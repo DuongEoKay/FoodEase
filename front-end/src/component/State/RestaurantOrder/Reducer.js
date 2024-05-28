@@ -32,6 +32,7 @@ const restaurantsOrderReducer = (state = initialState, action) => {
                 orders: action.payload
             };
         case UPDATE_ORDER_STATUS_SUCCESS:
+            console.log("update order status", action.payload);
             return {
                 ...state,
                 loading: false,

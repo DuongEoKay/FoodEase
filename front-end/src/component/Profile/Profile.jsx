@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom'
 import UserProfile from './UserProfile'
 import Address from './Address'
 import Favorites from './Favorites'
-import Events from './Events'
 import Orders from './Orders'
 
 const Profile = () => {
@@ -22,7 +21,6 @@ const Profile = () => {
                     <Route path='/orders' element={<Orders/>}/>
                     <Route path='/address' element={<Address/>}/>
                     <Route path='/favourite' element={<Favorites/>}/>
-                    <Route path='/events' element={<Events/>}/>
 
 
 

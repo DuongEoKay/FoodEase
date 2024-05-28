@@ -17,9 +17,6 @@ const menu=[
     {title:"Orders",icon:<ShoppingBagIcon/>},
     {title:"Favourite",icon:<FavoriteIcon/>},
     {title:"Address",icon:<HomeIcon/>},
-    {title:"Payment",icon:<AccountBalanceWalletIcon/>},
-    {title:"Notification",icon:<NotificationsIcon/>},
-    {title:"Events",icon:<EventNoteIcon/>},
     {title:"Logout",icon:<LogoutIcon/>}
 ]
 export const ProfileNavigation = ({open, handleClose}) => {

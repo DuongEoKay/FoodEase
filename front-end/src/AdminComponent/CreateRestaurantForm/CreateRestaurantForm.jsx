@@ -40,9 +40,6 @@ export const CreateRestaurantForm = () => {
     const file=e.target.files[0]
     setUploadImage(true)
     const image=await upload2Cloudinary(file)
-
-    console.log(image)
-
     formik.setFieldValue('images',[...formik.values.images,image])
     setUploadImage(false)
 
@@ -72,7 +69,6 @@ export const CreateRestaurantForm = () => {
         }
         
       }
-      console.log(data)
       dispath(createRestaurant({data, jwt:localStorage.getItem('jwt')}))
     }
   })

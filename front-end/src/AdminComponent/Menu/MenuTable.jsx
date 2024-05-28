@@ -5,16 +5,18 @@ import { Delete, OtherHouses } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { CreateMenuForm } from './CreateMenuForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMenuItemsByRestaurantId } from '../../component/State/Menu/Action';
+import { deleteFoodAction, getMenuItemsByRestaurantId } from '../../component/State/Menu/Action';
 import { all } from 'axios';
 
 
-const orders = [1, 1, 1, 1, 1, 1]
 
 export const MenuTable = () => {
     const dispatch = useDispatch()
     const {menu,restaurant} = useSelector(state => state)
     const navigate = useNavigate()
+    const handleRemoveFood = (foodId) => {
+        dispatch(deleteFoodAction({foodId, jwt: localStorage.getItem('jwt')}))
+    }
     
     useEffect(() => {
         dispatch(getMenuItemsByRestaurantId(
@@ -27,7 +29,6 @@ export const MenuTable = () => {
         ))
     }, [])
 
-    console.log("menu",menu)
     return (
         <Box>
             <Card className='mt-1'>
@@ -68,7 +69,7 @@ export const MenuTable = () => {
                                 <TableCell align="right">{item.ingredients.map((ingredient)=><Chip label={ingredient.name}/>)}</TableCell>
                                 <TableCell align="right">{item.price}</TableCell>
                                 <TableCell align="right">{item.available?'Yes':'No'}</TableCell>
-                                <TableCell align="right"><IconButton><Delete/></IconButton></TableCell>
+                                <TableCell align="right"><IconButton ><Delete onClick={()=>handleRemoveFood(item.id)}/></IconButton></TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

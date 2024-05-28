@@ -13,6 +13,7 @@ import org.vanduong.online_food_ordering_system.service.OrderService;
 import org.vanduong.online_food_ordering_system.service.PaymentService;
 import org.vanduong.online_food_ordering_system.service.UserService;
 
+import java.io.Console;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,7 @@ public class OrderController {
                                                        @RequestHeader("Authorization") String jwt) throws Exception {
         User user = userService.findUserByJwt(jwt);
         Order order = orderService.createOrder(request, user);
+        
         PaymentResponse res =paymentService.createPaymentLink(order);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
 

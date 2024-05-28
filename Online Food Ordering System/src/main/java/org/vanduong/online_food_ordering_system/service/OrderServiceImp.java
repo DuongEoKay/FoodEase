@@ -9,6 +9,7 @@ import org.vanduong.online_food_ordering_system.repository.OrderRepository;
 import org.vanduong.online_food_ordering_system.repository.UserRepository;
 import org.vanduong.online_food_ordering_system.request.OrderRequest;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -61,7 +62,8 @@ public class OrderServiceImp implements OrderService{
         createdOrder.setDeliveryAddress(savedAddress);
 
 
-        Cart cart = cartService.findCartById(user.getId());
+        Cart cart = cartService.findCartByUserId(user.getId());
+
 
         List<OrderItem> orderItems = new ArrayList<>();
 
@@ -72,9 +74,6 @@ public class OrderServiceImp implements OrderService{
             orderItem.setQuantity(cartItem.getQuantity());
             orderItem.setIngredients(cartItem.getIngredients());
             orderItem.setTotalPrice(cartItem.getTotalPrice());
-
-
-
             OrderItem savedOrderItem = orderItemRepository.save(orderItem);
             orderItems.add(savedOrderItem);
 
@@ -99,11 +98,10 @@ public class OrderServiceImp implements OrderService{
     @Override
     public Order updateOrder(Long orderId, String orderStatus) throws Exception {
         Order order = findOrderById(orderId).get();
-        if(orderStatus.equals("OUT_FOR_DELIVERY")
+        if(orderStatus.equals("CANCELLED")
                 || orderStatus.equals("DELIVERED")
-                || orderStatus.equals("COMPLETE")
+                || orderStatus.equals("COMPLETED")
                 || orderStatus.equals("PENDING"))
-
         {
             order.setOrderStatus(orderStatus);
             return orderRepository.save(order);

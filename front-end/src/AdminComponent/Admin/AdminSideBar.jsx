@@ -22,7 +22,6 @@ const menu = [
     { name: 'Menu', icon: <RestaurantMenuIcon />, link: '/menu' },
     { name: 'Food Category', icon: <CategoryIcon />, link: '/category' },
     { name: 'Ingredients', icon: <SoupKitchenIcon />, link: '/ingredients' },
-    { name: 'Events', icon: <EventIcon />, link: '/events' },
     { name: 'Details', icon: <InfoIcon />, link: '/details' },
     { name: 'Logout', icon: <LogoutIcon />, link: '/' },
 ]

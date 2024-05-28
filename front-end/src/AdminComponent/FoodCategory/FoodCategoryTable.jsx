@@ -30,7 +30,6 @@ export const FoodCategoryTable = () => {
         dispatch(getRestaurantsCategory({jwt, restaurantId:restaurant.usersRestaurant?.id }))
     
     }, [])
-    console.log('category day ne', restaurant.categories)
 
   
     return (

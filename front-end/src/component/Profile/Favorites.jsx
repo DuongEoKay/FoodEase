@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux'
 
 const Favorites = () => {
   const auth=useSelector(state=>state)
-  console.log(auth)
   return (
     <div>
       <h1 className='py-5 text-xl font-semibold text-center'>My Favourite</h1>

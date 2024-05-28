@@ -32,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
                                 .setPriceData(
                                         SessionCreateParams.LineItem.PriceData.builder()
                                                 .setCurrency("vnd")
-                                                .setUnitAmount((long) order.getTotalPrice()*100)
+                                                .setUnitAmount((long) order.getTotalPrice())
                                                 .setProductData(
                                                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
                                                                 .setName("FoodEase Order")

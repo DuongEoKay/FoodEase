@@ -60,7 +60,8 @@ export const RestaurantDetails = () => {
             restaurantId: id,
             seasonal: selectedFoodType === 'seasonal' || selectedFoodType === 'all',
             vegetarian: selectedFoodType === 'vegetarian' || selectedFoodType === 'all',
-            foodCategory: selectedCategory
+            foodCategory: selectedCategory,
+            all:false
         }))
 
     }, [selectedCategory, selectedFoodType])

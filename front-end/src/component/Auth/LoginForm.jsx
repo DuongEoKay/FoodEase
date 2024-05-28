@@ -18,7 +18,6 @@ export const LoginForm = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = (values) => {
-    console.log("form values",values)
     dispatch(loginUser({userData:values, navigate}))
   }
   return (

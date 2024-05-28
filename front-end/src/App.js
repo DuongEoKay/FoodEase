@@ -26,7 +26,6 @@ function App() {
   },[auth.user]);
 
 
-
   return (
     <ThemeProvider theme={DarkTheme}>
         <CssBaseline />

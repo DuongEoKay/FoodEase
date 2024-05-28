@@ -53,7 +53,6 @@ export const CreateMenuForm = () => {
         setUploadImage(true)
         const image = await upload2Cloudinary(file)
 
-        console.log(image)
 
         formik.setFieldValue('imgs', [...formik.values.imgs, image])
         setUploadImage(false)

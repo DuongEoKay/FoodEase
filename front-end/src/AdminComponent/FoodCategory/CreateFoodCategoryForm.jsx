@@ -12,7 +12,6 @@ export const CreateFoodCategoryForm = () => {
             name:FormData.categoryName,
             restaurantId:0
         }
-        console.log(data)
         dispatch(createCategoryAction({reqData:data, jwt:localStorage.getItem('jwt')}))
     }
 

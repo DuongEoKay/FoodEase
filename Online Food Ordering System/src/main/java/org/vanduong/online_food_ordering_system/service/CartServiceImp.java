@@ -35,38 +35,33 @@ public class CartServiceImp implements CartService{
     private FoodService foodService;
 
 
-    @Override
-    public CartItem addItemToCart(AddCartItemRequest request, String jwt) throws Exception {
-        User user = userService.findUserByJwt(jwt);
-        Food food = foodService.findFoodById(request.getFoodId());
+@Override
+public CartItem addItemToCart(AddCartItemRequest request, String jwt) throws Exception {
+    User user = userService.findUserByJwt(jwt);
+    Food food = foodService.findFoodById(request.getFoodId());
 
-        Cart cart = cartRepository.findByCustomerId(user.getId());
+    Cart cart = cartRepository.findByCustomerId(user.getId());
 
-        for(CartItem cartItem:cart.getCartItems())
+    for(CartItem cartItem:cart.getCartItems())
+    {
+        if(cartItem.getFood().equals(food))
         {
-            if(cartItem.getFood().equals(food))
-            {
-                cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
-                return updateCartItemQuantity(cartItem.getId(), cartItem.getQuantity());
-            }
             cartItem.setQuantity(cartItem.getQuantity() + request.getQuantity());
-            return cartItemRepository.save(cartItem);
+            return updateCartItemQuantity(cartItem.getId(), cartItem.getQuantity());
         }
-
-        CartItem cartItem = new CartItem();
-        cartItem.setFood(food);
-        cartItem.setQuantity(request.getQuantity());
-        cartItem.setCart(cart);
-        cartItem.setIngredients(request.getIngredients());
-        cartItem.setTotalPrice(food.getPrice() * request.getQuantity());
-
-
-        CartItem savedCartItem = cartItemRepository.save(cartItem);
-        cart.getCartItems().add(savedCartItem);
-        return savedCartItem;
-
     }
 
+    CartItem cartItem = new CartItem();
+    cartItem.setFood(food);
+    cartItem.setQuantity(request.getQuantity());
+    cartItem.setCart(cart);
+    cartItem.setIngredients(request.getIngredients());
+    cartItem.setTotalPrice(food.getPrice() * request.getQuantity());
+
+    CartItem savedCartItem = cartItemRepository.save(cartItem);
+    cart.getCartItems().add(savedCartItem);
+    return savedCartItem;
+}
     @Override
     public CartItem updateCartItemQuantity(Long cartItemId, int quantity) throws Exception {
         Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);

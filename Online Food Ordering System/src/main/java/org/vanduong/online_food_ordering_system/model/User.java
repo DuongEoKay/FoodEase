@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.vanduong.online_food_ordering_system.dto.RestaurantDto;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class User {
 
     private USER_ROLE role=USER_ROLE.ROLE_CUSTOMER;
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private List<Order> orders =new ArrayList<>();
@@ -42,5 +44,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses=new ArrayList<>();
+
 
 }

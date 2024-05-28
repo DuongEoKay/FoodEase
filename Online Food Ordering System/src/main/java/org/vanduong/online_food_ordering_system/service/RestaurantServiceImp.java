@@ -142,7 +142,6 @@ public class RestaurantServiceImp implements RestaurantService{
         else {
             favorites.removeIf(r -> Objects.equals(r.getId(), restaurantId));
         }
-        System.out.println(favorites);
 
         userRepository.save(user);
         System.out.println(user.getFavourites());

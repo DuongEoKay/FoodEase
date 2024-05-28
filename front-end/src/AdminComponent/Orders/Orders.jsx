@@ -26,7 +26,7 @@ export const Orders = () => {
   }
   return (
     <div className='px-2'>
-      <Card className='p-5'>
+      {/* <Card className='p-5'>
         <Typography sx={{paddingBottom:"1rem"}} variant='h5'>
           Order Status
         </Typography>
@@ -36,7 +36,7 @@ export const Orders = () => {
             {orderStatus.map((item,i)=><FormControlLabel key={i} value={item.value} control={<Radio/>} label={item.label} sx={{color:"gray"}}/>)}
           </RadioGroup>
         </FormControl>
-      </Card>
+      </Card> */}
 
       <OrderTable/>
     </div>

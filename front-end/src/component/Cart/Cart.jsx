@@ -70,7 +70,7 @@ const Cart = () => {
                 deliveryAddress:{
                     street: values.streetAddress,
                     city: values.city,
-                    postalCode: values.pincode
+                    postalCode: values.postalCode
                 }
     
             }
@@ -93,21 +93,21 @@ const Cart = () => {
 
                         </div>
 
-                        <div className='flex justify-between text-gray-400 '>
+                        <div className='flex justify-between text-gray-400 py-5'>
                             <p>Deliver Fee</p>
-                            <p>10000 VND</p>
+                            <p>0 VND</p>
 
                         </div>
 
                         <div className='flex justify-between text-gray-400'>
                             <p>GST and Restaurant Charges</p>
-                            <p>20000 VND</p>
+                            <p>0 VND</p>
 
                         </div>
                         <Divider className='py-5'/>
                         <div className='flex justify-between py-5 text-gray-400'>
                             <p>Total Pay</p>
-                            <p>{cart.cart?.total+10000+20000} VND</p>
+                            <p>{cart.cart?.total} VND</p>
                         </div>
                     </div>
 
@@ -120,7 +120,7 @@ const Cart = () => {
                             Choose Delivery Address
                         </h1>
                         <div className='flex gap-5 flex-wrap justify-center'>
-                            {[1, 1, 1, 1].map((item) => <AddressCard handleSelectAddress={createOrderUsingSelectedAddress} item={item} showButton={true} />)}
+                            {auth.user?.addresses.map((item) => <AddressCard handleSelectAddress={createOrderUsingSelectedAddress} item={item} showButton={true} />)}
                             <Card className='flex gap-5 w-64 p-5'>
                                 <LocationOnIcon />
                                 <div className='space-y-3 text-gray-500'>

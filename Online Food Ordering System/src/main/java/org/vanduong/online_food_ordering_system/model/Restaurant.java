@@ -38,6 +38,7 @@ public class Restaurant {
 
     private String openingHours;
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders=new ArrayList<>();
@@ -50,6 +51,7 @@ public class Restaurant {
 
     private boolean isOpen;
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Food> foods=new ArrayList<>();

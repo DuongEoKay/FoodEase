@@ -37,7 +37,7 @@ const menuItemReducer =(state=initialState, action) => {
         return {
             ...state,
             loading: false,
-            menuItem: state.menuItems.filter(
+            menuItem: state.menuItem.filter(
                 (item) => item.id !== action.payload               
             )
         };
@@ -46,7 +46,7 @@ const menuItemReducer =(state=initialState, action) => {
         return {
             ...state,
             loading: false,
-            menuItem: state.menuItems.map((item) =>
+            menuItem: state.menuItem.map((item) =>
                 item.id === action.payload.id ? action.payload : item
             )
         };

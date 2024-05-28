@@ -12,12 +12,13 @@ import {
 import { api } from '../../config/api';
 
 export const updateOrderStatus = ({orderId, orderStatus, jwt})=>{
+   
     return async (dispatch)=>{
         dispatch({type: UPDATE_ORDER_STATUS_REQUEST});
         try{
-            const response = await api.put(api.updateOrderStatus, {orderId, orderStatus}, {
+            const response = await api.put(`admin/order/${orderId}/${orderStatus}`,{},{
                 headers: {
-                    'Authorization': `Bearer ${jwt}`
+                    Authorization: `Bearer ${jwt}`
                 }
             });
             console.log("update order status", response.data);
@@ -37,7 +38,7 @@ export const fetchRestaurantsOrder=({restaurantId, orderStatus, jwt})=>{
             const response = await api.get(`admin/order/restaurant/${restaurantId}`,{
                 params: {order_status:orderStatus},
                 headers: {
-                    'Authorization': `Bearer ${jwt}`
+                    Authorization: `Bearer ${jwt}`
                 }
             });
             console.log("fetch restaurant order", response.data);

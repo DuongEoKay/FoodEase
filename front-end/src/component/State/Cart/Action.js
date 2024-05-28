@@ -63,6 +63,7 @@ export const getAllCartItems=(reqData) => {
 
 
 export const addItemtoCart=(reqData) => {
+    console.log("reqData",reqData);
     return async (dispatch) => {
         dispatch({type: ADD_ITEM_TO_CART_REQUEST});
         try {
