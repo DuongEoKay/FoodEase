@@ -18,7 +18,6 @@ public class RestaurantDto {
     @Column(length = 1000)
     private List<String> imgs;
 
-
     private String description;
 
     private Long id;

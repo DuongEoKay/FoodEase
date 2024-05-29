@@ -8,6 +8,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Auth } from '../component/Auth/Auth'
 import { PaymentSuccess } from '../component/Payment/PaymentSuccess'
 import { PaymentCancel } from '../component/Payment/PaymentCancel'
+import { SearchResult } from '../component/SearchResult/SearchResult'
 
 export const CustomerRoute = () => {
   return (
@@ -15,6 +16,7 @@ export const CustomerRoute = () => {
         <Navbar />
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchResult />} />
             <Route path="/account/:register" element={<Home />} />
             <Route path="/restaurant/:city/:title/:id" element={<RestaurantDetails />} />
             <Route path="/cart" element={<Cart />} />

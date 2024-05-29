@@ -20,7 +20,7 @@ public class SearchResource {
     @Autowired
     RestaurantElasticsearchRepository restaurantElasticsearchRepository;
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<RestaurantDto> searchAll() {
         List<RestaurantDto> restaurantDtos = new ArrayList<>();
         Iterable<RestaurantDto> restaurantIterable = restaurantElasticsearchRepository.findAll();

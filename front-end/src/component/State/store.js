@@ -7,6 +7,7 @@ import cartReducer from "./Cart/Reducer";
 import orderReducer from "./Order/Reducer";
 import restaurantsOrderReducer from "./RestaurantOrder/Reducer";
 import ingredientReducer from "./Ingredients/Reducer";
+import searchReducer from "./Search/Reducer";
 
 const rootReducer = combineReducers({
     auth:authReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     cart:cartReducer,
     order:orderReducer,
     restaurantOrder:restaurantsOrderReducer,
-    ingredients:ingredientReducer
+    ingredients:ingredientReducer,
+    search:searchReducer
 
 
 })

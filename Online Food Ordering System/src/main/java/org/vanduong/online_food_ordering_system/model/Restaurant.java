@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Document(indexName = "restaurant")
+//@Document(indexName = "restaurant")
 @Data
 @Entity
 @NoArgsConstructor

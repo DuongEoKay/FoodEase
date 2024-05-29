@@ -46,7 +46,7 @@ const RestaurantCard = ({item}) => {
     <Card className='w-[18rem]'>
       <div className={`${true ? 'cursor-pointer' : 'cursor-not-allowed'} relative`}>
         <img className='w-full h-[10rem] rounded-t-md object-cover' src={item.imgs[1]} alt="" />
-        <Chip className='absolute top-2 right-2' label={item.isOpen ? "Open" : "Closed"} color={item.isOpen ? "success" : "error"} />
+        <Chip className='absolute top-2 right-2' label={item.open ? "Open" : "Closed"} color={item.open ? "success" : "error"} />
       </div>
       <div className='p-4 textPart lg:flex w-full justify-between'>
         <div className='space-y-1'>
