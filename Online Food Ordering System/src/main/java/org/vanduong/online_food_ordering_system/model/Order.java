@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.util.Date;
 import java.util.List;
+
 
 @Entity
 @Data

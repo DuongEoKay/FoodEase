@@ -4,13 +4,14 @@ package org.vanduong.online_food_ordering_system.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-
+@Document(indexName = "restaurant")
 @Data
 @Entity
 @NoArgsConstructor
