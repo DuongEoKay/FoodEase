@@ -19,20 +19,18 @@ const RestaurantCard = ({item}) => {
 
   const [isFavorited, setIsFavorited] = useState(false);
 
-  // Use useEffect to set the initial state
   useEffect(() => {
     setIsFavorited(isPresentInFavourite(auth.favorites, item));
   }, [auth.favorites, item]);
   
   const handleAddToFavorite = () => {
     if (isFavorited) {
-      // If the item is already favorited, dispatch an action to remove it from favorites
       dispatch(addToFavorite({jwt,restaurantId: item.id}));
     } else {
-      // If the item is not favorited, dispatch an action to add it to favorites
+
       dispatch(addToFavorite({jwt,restaurantId: item.id}));
     }
-    // Toggle the favorited state
+
     setIsFavorited(!isFavorited);
   }
   

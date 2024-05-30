@@ -22,14 +22,14 @@ const style = {
 export const FoodCategoryTable = () => {
     const jwt = localStorage.getItem('jwt')
     const dispatch = useDispatch()
-    const {  restaurant } = useSelector(state => state)
+    const {  restaurant, ingredients } = useSelector(state => state)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     useEffect(() => {
-        dispatch(getRestaurantsCategory({jwt, restaurantId:restaurant.usersRestaurant?.id }))
+        dispatch(getRestaurantsCategory({jwt, restaurantId:restaurant.usersRestaurant?.owner.id }))
     
-    }, [])
+    }, [restaurant.usersRestaurant?.id])
 
   
     return (

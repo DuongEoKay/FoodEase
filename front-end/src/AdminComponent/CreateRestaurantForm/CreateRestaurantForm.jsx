@@ -7,6 +7,7 @@ import Address from '../../component/Profile/Address';
 import { upload2Cloudinary } from '../Utils/Upload2Cloudinary';
 import { useDispatch } from 'react-redux';
 import { createRestaurant } from '../../component/State/Restaurant/Action';
+import { useNavigate } from 'react-router-dom';
 
 
 const initialValues = {
@@ -27,6 +28,7 @@ const initialValues = {
 
 export const CreateRestaurantForm = () => {
 
+  const navigate = useNavigate()
   const dispath = useDispatch()
   const handleRemoveImage = (index) => {
     const updatedImages=[...formik.values.images]
@@ -54,7 +56,7 @@ export const CreateRestaurantForm = () => {
         imgs:values.images,
         name:values.name,
         description:values.description,
-        cuisineStyle:values.cuisioneType,
+        cuisineStyle:values.cuisineType,
         openingHours:values.openingHour,
         address:{
           street:values.streetAddress,
@@ -70,6 +72,9 @@ export const CreateRestaurantForm = () => {
         
       }
       dispath(createRestaurant({data, jwt:localStorage.getItem('jwt')}))
+      .then(() => {
+        window.location.href = 'http://localhost:3000/admin/restaurant';
+      });
     }
   })
 
@@ -86,6 +91,7 @@ export const CreateRestaurantForm = () => {
                 accept='image/*'
                 id='fileInput'
                 style={{ display: 'none' }}
+                multiple
                 onChange={handleImageChange}
                 type='file' />
 
@@ -247,7 +253,7 @@ export const CreateRestaurantForm = () => {
               />
             </Grid>
           </Grid>
-          <Button type='submit' variant='contained' color='primary' >
+          <Button  type='submit' variant='contained' color='primary' >
             Add Restaurant
           </Button>
         </form>

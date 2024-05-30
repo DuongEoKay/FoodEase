@@ -89,11 +89,14 @@ export const updateCartItem = (data,jwt) => {
                 headers: {
                     Authorization: `Bearer ${jwt}`
                 }
+            
             });
             dispatch({type: UPDATE_CARTITEM_SUCCESS, payload: response.data});
+            console.log("update cart item",response.data);
         }
         catch (error) {
             dispatch({type: UPDATE_CARTITEM_FAILURE, error: error});
+            console.log("error",error);
         }
     }
 }

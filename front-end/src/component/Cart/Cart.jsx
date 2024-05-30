@@ -1,5 +1,5 @@
 import { Button, Card, Divider, Grid, Modal, TextField } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CartItem } from './CartItem'
 import { AddressCard } from './AddressCard'
 import LocationOnIcon from '@mui/icons-material/LocationOn';
@@ -8,7 +8,9 @@ import Typography from '@mui/material/Typography';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../State/Order/Action';
-//import * as Yup from 'yup';
+import HomeIcon from '@mui/icons-material/Home';
+import { findCart } from '../State/Cart/Action';
+
 
 
 const items = [1, 1]
@@ -25,10 +27,10 @@ export const style = {
 };
 
 
-const initialValues={
-    streetAddress:'',
-    postalCode:'',
-    city:''
+const initialValues = {
+    street: '',
+    postalCode: '',
+    city: ''
 }
 
 
@@ -44,16 +46,16 @@ const initialValues={
 // })
 
 const Cart = () => {
-
+    const token = localStorage.getItem('jwt')
     const dispatch = useDispatch()
 
     const createOrderUsingSelectedAddress = () => { }
-    
+
     const handleOpenAddressModal = () => setOpen(true);
     const [open, setOpen] = React.useState(false);
-    
-    const {cart, auth} = useSelector(state => state)
-    
+
+    const { cart, auth } = useSelector(state => state)
+
 
 
     const handleClose = () => {
@@ -62,27 +64,28 @@ const Cart = () => {
 
 
     const handleSubmit = (values) => {
-        
-        const data={
-            jwt:localStorage.getItem('jwt'),
-            order:{
-                restaurantId:cart.cart.cartItems[0].food?.restaurant.id,
-                deliveryAddress:{
-                    street: values.streetAddress,
+
+        const data = {
+            jwt: localStorage.getItem('jwt'),
+            order: {
+                restaurantId: cart.cart.cartItems[0].food?.restaurant.id,
+                deliveryAddress: {
+                    street: values.street,
                     city: values.city,
                     postalCode: values.postalCode
                 }
-    
+
             }
         }
         dispatch(createOrder(data))
     }
+
     return (
 
         <>
             <main className='lg:flex justify-between'>
                 <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
-                    {cart.cart?.cartItems.map((item) => (<CartItem item={item}/>))}
+                    {cart.cart?.cartItems.map((item) => (<CartItem item={item} />))}
                     <Divider />
 
                     <div className='billlDetails px-5 text-sm'>
@@ -104,7 +107,7 @@ const Cart = () => {
                             <p>0 VND</p>
 
                         </div>
-                        <Divider className='py-5'/>
+                        <Divider className='py-5' />
                         <div className='flex justify-between py-5 text-gray-400'>
                             <p>Total Pay</p>
                             <p>{cart.cart?.total} VND</p>
@@ -120,7 +123,21 @@ const Cart = () => {
                             Choose Delivery Address
                         </h1>
                         <div className='flex gap-5 flex-wrap justify-center'>
-                            {auth.user?.addresses.map((item) => <AddressCard handleSelectAddress={createOrderUsingSelectedAddress} item={item} showButton={true} />)}
+                            {auth.user?.addresses.map((item) => <Card className='flex gap-5 w-64 p-5'>
+                                <HomeIcon />
+                                <div className='space-y-3 text-gray-500'>
+                                    <h1 className='font-semibold text-lg text-white'>{item.city}</h1>
+                                    <p>
+                                        Street: {item.street}
+                                    </p>
+                                    <p>
+                                        Postal Code: {item.postalCode}
+                                    </p>
+                                    {(<Button variant="outlined" fullWidth onClick={() => handleSubmit(item)}>
+                                        Select
+                                    </Button>)}
+                                </div>
+                            </Card>)}
                             <Card className='flex gap-5 w-64 p-5'>
                                 <LocationOnIcon />
                                 <div className='space-y-3 text-gray-500'>
@@ -141,60 +158,60 @@ const Cart = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <Formik initialValues={initialValues} 
-                    //validationSchema={validationSchema}
-                     onSubmit={handleSubmit}>
+                    <Formik initialValues={initialValues}
+                        //validationSchema={validationSchema}
+                        onSubmit={handleSubmit}>
                         <Form>
 
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <Field 
-                                as={TextField}
-                                name='streetAddress'
-                                label='Street Address'
-                                variant='outlined'
-                                fullWidth
-                                // error={!ErrorMessage("streetAddress")}
-                                // hyperText={<ErrorMessage>
-                                //     {(msg)=><span className='text-red-600'>{msg}</span>}
-                                // </ErrorMessage>}
-                                />
-                            </Grid>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name='street'
+                                        label='Street Address'
+                                        variant='outlined'
+                                        fullWidth
+                                    // error={!ErrorMessage("streetAddress")}
+                                    // hyperText={<ErrorMessage>
+                                    //     {(msg)=><span className='text-red-600'>{msg}</span>}
+                                    // </ErrorMessage>}
+                                    />
+                                </Grid>
 
 
-                            <Grid item xs={12}>
-                                <Field 
-                                as={TextField}
-                                name='city'
-                                label='City'
-                                variant='outlined'
-                                fullWidth
-                                // error={!ErrorMessage("streetAddress")}
-                                // hyperText={<ErrorMessage>
-                                //     {(msg)=><span className='text-red-600'>{msg}</span>}
-                                // </ErrorMessage>}
-                                />
-                            </Grid>
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name='city'
+                                        label='City'
+                                        variant='outlined'
+                                        fullWidth
+                                    // error={!ErrorMessage("streetAddress")}
+                                    // hyperText={<ErrorMessage>
+                                    //     {(msg)=><span className='text-red-600'>{msg}</span>}
+                                    // </ErrorMessage>}
+                                    />
+                                </Grid>
 
-                            <Grid item xs={12}>
-                                <Field 
-                                as={TextField}
-                                name='postalCode'
-                                label='Postal Code'
-                                variant='outlined'
-                                fullWidth
-                                // error={!ErrorMessage("streetAddress")}
-                                // hyperText={<ErrorMessage>
-                                //     {(msg)=><span className='text-red-600'>{msg}</span>}
-                                // </ErrorMessage>}
-                                />
+                                <Grid item xs={12}>
+                                    <Field
+                                        as={TextField}
+                                        name='postalCode'
+                                        label='Postal Code'
+                                        variant='outlined'
+                                        fullWidth
+                                    // error={!ErrorMessage("streetAddress")}
+                                    // hyperText={<ErrorMessage>
+                                    //     {(msg)=><span className='text-red-600'>{msg}</span>}
+                                    // </ErrorMessage>}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button fullWidth variant='contained' type="submit" color="primary" >
+                                        Deliver Here
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12}>
-                                <Button fullWidth variant='contained' type="submit" color="primary" >
-                                    Deliver Here
-                                </Button>
-                            </Grid>
-                        </Grid>
                         </Form>
 
                     </Formik>

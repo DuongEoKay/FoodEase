@@ -8,6 +8,7 @@ import { upload2Cloudinary } from '../Utils/Upload2Cloudinary';
 import { useDispatch, useSelector } from 'react-redux';
 import { getIngredientsOfRestaurant } from '../../component/State/Ingredients/Action';
 import { createMenuItem } from '../../component/State/Menu/Action';
+import { getRestaurantsCategory } from '../../component/State/Restaurant/Action';
 
 
 const initialValues = {
@@ -66,12 +67,16 @@ export const CreateMenuForm = () => {
         onSubmit: values => {
             values.restaurantId = restaurant.usersRestaurant?.id
 
-            dispatch(createMenuItem({ values, jwt }))
+            dispatch(createMenuItem({ values, jwt })).then(() => {
+                window.location.href = 'http://localhost:3000/admin/restaurant/menu';
+              });
+            
         }
     })
 
     useEffect(() => {
         dispatch(getIngredientsOfRestaurant({ id: restaurant.usersRestaurant?.id, jwt: jwt }))
+        dispatch(getRestaurantsCategory({jwt, restaurantId:restaurant.usersRestaurant?.owner.id }))
     }, [])
 
     return (

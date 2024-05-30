@@ -1,15 +1,16 @@
 import { Chip, IconButton } from '@mui/material'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {removeCartItem, updateCartItem} from '../State/Cart/Action'
+import {findCart, removeCartItem, updateCartItem} from '../State/Cart/Action'
 
 
 
 export const CartItem = ({item}) => {
+    const token=localStorage.getItem('jwt')
     const {auth,cart}=useSelector(state=>state)
     const navigate=useNavigate()
     const dispatch=useDispatch()
@@ -24,6 +25,11 @@ export const CartItem = ({item}) => {
         dispatch(updateCartItem(data,jwt))
 
     }
+
+
+useEffect(()=>{
+    dispatch(findCart(token))
+},[cart?.cartItems])
 
     
     return (

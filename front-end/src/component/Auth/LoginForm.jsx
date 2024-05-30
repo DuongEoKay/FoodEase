@@ -44,6 +44,7 @@ export const LoginForm = () => {
             variant='outlined'
             fullWidth
             margin='normal'
+            type='password'
           />
 
           <Button sx={{ mt: 2, padding: "1rem" }} fullWidth variant='contained' type='submit' color='primary'>

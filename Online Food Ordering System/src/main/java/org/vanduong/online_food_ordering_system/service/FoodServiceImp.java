@@ -105,20 +105,25 @@ public class FoodServiceImp implements FoodService {
 
     @Override
     public List<Food> getRestaurantFoods(Long restaurantId, boolean isVegan, boolean isSeasonal, Long categoryId, boolean all) {
+
         List<Food> foods = foodRepository.findByRestaurantId(restaurantId);
         if(all==true){
             return foods;
         }
 
 
+
         if(isVegan==true){
             if(isSeasonal==true)
             {
+
+
                 return foods;
             }
             foods.removeIf(food -> !food.isVeg());
         }
         if(isVegan==false){
+
             if (isSeasonal) {
                 foods.removeIf(food -> !food.isSeasonal());
             }
@@ -128,16 +133,6 @@ public class FoodServiceImp implements FoodService {
 
         }
 
-
-
-        if (categoryId != null) {
-            foods.removeIf(food -> {
-                if (food.getFoodCategory() != null) {
-                    return !Objects.equals(food.getFoodCategory().getId(), categoryId);
-                }
-                return false;
-            });
-        }
 
         return foods;
     }

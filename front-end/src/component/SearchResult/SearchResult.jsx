@@ -43,7 +43,6 @@ const content = results.length ? (
     <p className="text-xl text-gray-500">No Matching Restaurants</p>
   </article>
 )
-console.log("restaurant", restaurant);
 return (
   <div>
 <p className="text-left text-xl text-gray-400 mt-7 ml-7 ">Here the result: </p>

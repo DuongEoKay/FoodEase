@@ -24,8 +24,6 @@ import {
 
 
 export const createMenuItem = ({values, jwt}) => {
-    console.log("create menu item",values);
-    console.log("jwt",jwt);
     return async (dispatch) => {
         dispatch({type: CREATE_MENU_ITEM_REQUEST});
         try {
@@ -45,7 +43,7 @@ export const createMenuItem = ({values, jwt}) => {
 };
 
 export const getMenuItemsByRestaurantId = (reqData) => {
-    return async (dispatch) => {
+   return async (dispatch) => {
         dispatch({type: GET_MENU_ITEMS_BY_RESTAURANT_ID_REQUEST});
         try {
             const {data} = await api.get(`/food/restaurant/${reqData.restaurantId}?isVegan=${reqData.vegetarian}&isSeasonal=${reqData.seasonal}&categoryId=${reqData.foodCategory}&all=${reqData.all}`,

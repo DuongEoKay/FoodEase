@@ -1,5 +1,5 @@
 import { Avatar, Badge, Box, IconButton } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import { Auth } from '../Auth/Auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchRestaurants } from '../State/Search/Action';
+import { findCart } from '../State/Cart/Action';
 
 
 export const Navbar = () => {
     const { auth, cart } = useSelector(state => state)
+    const token = localStorage.getItem('jwt')
 
     const navigate = useNavigate()
     const handleAvatarClick = () => {
@@ -43,9 +45,11 @@ export const Navbar = () => {
     const handleSearch = (event) => {
         event.preventDefault();
         navigate('/search');
-        dispatch(searchRestaurants({searchTerm}))
-        console.log("searchTerm", searchTerm);
-      };
+        dispatch(searchRestaurants({ searchTerm }))
+    };
+    useEffect(() => {
+        dispatch(findCart(token))
+    }, [JSON.stringify(cart?.cartItems)])
     return (
 
 
@@ -94,7 +98,7 @@ export const Navbar = () => {
 
 
                     <div className=''>
-                        {auth.user ? <Avatar onClick={handleAvatarClick} sx={{ bgcolor: "white", color: 'black' }}>{auth.user?.fullName[0].toUpperCase()}
+                        {auth.user ? <Avatar onClick={handleAvatarClick} sx={{ bgcolor: "white", color: 'black' }}>{auth.user?.fullName[0]?.toUpperCase()}
 
                         </Avatar> :
                             <IconButton onClick={() => { navigate('/account/login') }} >

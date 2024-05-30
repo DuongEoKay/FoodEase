@@ -54,6 +54,7 @@ const cartReducer = (state=initialState, action) => {
                 )
             };
         case actionTypes.UPDATE_CARTITEM_SUCCESS:
+            console.log("cai nay trong reducer",action.payload)
             return {
                 ...state,
                 loading: false,

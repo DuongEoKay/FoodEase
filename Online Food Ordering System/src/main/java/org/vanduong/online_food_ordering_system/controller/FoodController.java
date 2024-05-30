@@ -12,6 +12,7 @@ import org.vanduong.online_food_ordering_system.service.FoodService;
 import org.vanduong.online_food_ordering_system.service.RestaurantService;
 import org.vanduong.online_food_ordering_system.service.UserService;
 
+import java.io.Console;
 import java.util.List;
 
 @RestController
@@ -57,6 +58,8 @@ public class FoodController {
         Restaurant restaurant = restaurantService.findRestaurantById(restaurantId);
 
         List<Food> food = foodService.getRestaurantFoods(restaurantId,isVegan,isSeasonal,categoryId, all);
+
+
 
         return ResponseEntity.ok(food);
     }
