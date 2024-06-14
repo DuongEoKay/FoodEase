@@ -1,10 +1,32 @@
-version: '3'
+version: '1'
 services:
   elasticsearch:
     image: elasticsearch:8.8.0
     ports:
       - 9200:9200
-      - 9300:9300
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - food-ease-network
+
+
+  food-ease:
+    image: appv1
+    build: .
+    ports:
+      - 5454:5454
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - food-ease-network
+
+networks:
+  food-ease-network:
+    external: true

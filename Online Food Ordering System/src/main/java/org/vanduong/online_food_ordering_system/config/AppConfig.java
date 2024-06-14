@@ -4,6 +4,7 @@ package org.vanduong.online_food_ordering_system.config;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
@@ -27,6 +28,7 @@ import java.util.Collections;
 @EnableWebSecurity
 @EnableJpaRepositories(basePackages = "org.vanduong.online_food_ordering_system.repository")
 @EnableElasticsearchRepositories(basePackages = "org.vanduong.online_food_ordering_system.elasticRepository")
+
 public class AppConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
