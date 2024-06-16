@@ -1,4 +1,4 @@
-version: '1'
+version: '2.27.0'
 services:
   elasticsearch:
     image: elasticsearch:8.8.0
@@ -12,21 +12,16 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-    networks:
-      - food-ease-network
+
 
 
   food-ease:
-    image: appv1
+    image: appv4
     build: .
     ports:
       - 5454:5454
     depends_on:
       elasticsearch:
         condition: service_healthy
-    networks:
-      - food-ease-network
-
-networks:
-  food-ease-network:
-    external: true
+    environment:
+      - SPRING_ELASTICSEARCH_URIS=http://elasticsearch:9200
